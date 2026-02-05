@@ -1,9 +1,9 @@
 ---
+import "../styles/global.css";
 import Footer from "../components/Footer.astro";
 import Header from "../components/Header.astro";
-import "../styles/global.css";
 import { ClientRouter } from "astro:transitions";
-
+import Analytics from "@vercel/analytics/astro";
 interface Props {
     title: string;
     description: string;
@@ -27,6 +27,7 @@ const { description, title } = Astro.props;
         <Header />
         <slot />
         <Footer />
+        <Analytics />
     </body>
 </html>
 
