@@ -1,0 +1,121 @@
+---
+import SunIcon from "../assets/icons/Sun.astro";
+import MoonIcon from "../assets/icons/Moon.astro";
+import SystemIcon from "../assets/icons/System.astro";
+
+const THEMES = ["Light", "Dark", "System"];
+---
+
+<div class="relative ml-1 mr-1">
+    <button
+        transition:persist
+        id="theme-toggle-btn"
+        class="appearance-none border-none flex"
+    >
+        <span class="sr-only">Elige el tema</span>
+        <SunIcon id="light" class="theme-toggle-icon size-5 transition-all" />
+        <MoonIcon
+            id="dark"
+            class="theme-toggle-icon absolute size-5 transition-all"
+        />
+        <SystemIcon
+            id="system"
+            class="theme-toggle-icon absolute size-5 transition-all"
+        />
+    </button>
+    <div
+        transition:persist
+        id="themes-menu"
+        class="absolute hidden top-8 right-0 text-md p-4 rounded-lg bg-white dark:bg-gray-900 shadow-lg backdrop-blur-lg"
+    >
+        <ul>
+            {
+                THEMES.map((theme) => (
+                    <li
+                        class="themes-menu-option p-2 font-medium cursor-pointer relative border-b border-transparent
+               hover:border-black dark:hover:border-white
+               transition-colors"
+                    >
+                        {theme}
+                    </li>
+                ))
+            }
+        </ul>
+    </div>
+</div>
+
+<style>
+    #themes-menu.open {
+        display: inline;
+        animation: scale-up-center 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94)
+            both;
+    }
+
+    @keyframes scale-up-center {
+        from {
+            transform: scale(0.8);
+            opacity: 0;
+        }
+
+        to {
+            transform: scale(1);
+            opacity: 1;
+        }
+    }
+</style>
+
+<script is:inline>
+    const media = window.matchMedia("(prefers-color-scheme: dark)");
+    const themesMenu = document.getElementById("themes-menu");
+
+    const getThemePreference = () => localStorage.getItem("theme") ?? "system";
+
+    const applyTheme = (theme) => {
+        const isDark =
+            theme === "dark" || (theme === "system" && media.matches);
+
+        document.documentElement.classList.toggle("dark", isDark);
+
+        document.querySelectorAll(".theme-toggle-icon").forEach((icon) => {
+            icon.style.scale = icon.id === theme ? "1" : "0";
+        });
+    };
+
+    const setTheme = (theme) => {
+        localStorage.setItem("theme", theme);
+        applyTheme(theme);
+    };
+
+    // Initial load
+    applyTheme(getThemePreference());
+
+    // System theme changes
+    media.addEventListener("change", () => {
+        if (getThemePreference() === "system") {
+            applyTheme("system");
+        }
+    });
+
+    // Menu toggle
+    document.addEventListener("click", () =>
+        themesMenu.classList.remove("open"),
+    );
+
+    document
+        .getElementById("theme-toggle-btn")
+        .addEventListener("click", (e) => {
+            e.stopPropagation();
+            themesMenu.classList.toggle("open");
+        });
+
+    document.querySelectorAll(".themes-menu-option").forEach((el) => {
+        el.addEventListener("click", () => {
+            setTheme(el.innerText.toLowerCase().trim());
+        });
+    });
+
+    // Astro navigation
+    document.addEventListener("astro:after-swap", () => {
+        applyTheme(getThemePreference());
+    });
+</script>

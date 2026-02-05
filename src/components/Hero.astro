@@ -1,0 +1,35 @@
+---
+import Terminal from "../assets/icons/Terminal.astro";
+import Github from "../assets/icons/Github.astro";
+import Linkedin from "../assets/icons/Linkedin.astro";
+import Mail from "../assets/icons/Mail.astro";
+import SocialButton from "./SocialButton.astro";
+---
+
+<div class="max-w-full flex flex-col gap-6">
+    <h1 class="flex items-end gap-2 text-4xl font-bold tracking-tight">
+        <Terminal class="size-8" />
+        Javier Martínez Blanco
+    </h1>
+    <p class="text-2xl text-slate-600 dark:text-slate-400">Software Engineer</p>
+    <p class="text-2xl w-2/3">
+        I design and build scalable web platforms that turn complex workflows
+        into clean and reliable digital systems.
+    </p>
+    <nav class="flex gap-6">
+        <SocialButton href="https://github.com/JavzM">
+            <Github class="size-4" />
+            Github
+        </SocialButton>
+        <SocialButton
+            href="https://www.linkedin.com/in/javier-martínez-89b3443a3"
+        >
+            <Linkedin class="size-4" />
+            LinkedIn
+        </SocialButton>
+        <SocialButton href="mailto:javier.martinez.blanco@est.una.ac.cr">
+            <Mail class="size-4" />
+            Contact me
+        </SocialButton>
+    </nav>
+</div>

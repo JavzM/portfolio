@@ -1,0 +1,17 @@
+---
+import { Image } from "astro:assets";
+import Logo from "../assets/images/Logo-UNA.webp";
+import InfoCard from "./InfoCard.astro";
+---
+
+<InfoCard class="flex gap-4">
+    <Image src={Logo} alt="UNA Logo" class="w-24" />
+    <div class="flex flex-col">
+        <h3 class="text-2xl font-bold leading-tight">
+            National University of Costa Rica (UNA)
+        </h3>
+        <h4 class="mt-1 font-medium text-slate-600 dark:text-slate-400">
+            Bachelor’s degree in software engineering
+        </h4>
+    </div>
+</InfoCard>

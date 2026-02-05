@@ -1,0 +1,42 @@
+---
+import Github from "../assets/icons/Github.astro";
+import AstroLogoDark from "../assets/icons/AstroLogoDark.astro";
+import AstroLogoLightGradient from "../assets/icons/AstroLogoLightGradient.astro";
+const currentYear = new Date().getFullYear();
+---
+
+<footer
+    class="w-full p-8 mx-auto container lg:max-w-7xl md:max-w-2xl text-black/60 dark:text-white/60 text-sm"
+>
+    <div
+        class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
+    >
+        <p>
+            © {currentYear} — Javier Martínez Blanco
+        </p>
+
+        <div class="flex items-center">
+            <div class="flex items-center">
+                <span class="text-black/60 dark:text-white/60">
+                    Built with
+                </span>
+                <AstroLogoDark class="w-20 mt-1 dark:hidden" />
+                <AstroLogoLightGradient class="hidden w-20 mt-1 dark:block" />
+            </div>
+
+            <span class="me-2">—</span>
+
+            <a
+                href="https://github.com/JavzM/portfolio"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="flex items-center gap-2 border-b border-transparent
+                       hover:border-black dark:hover:border-white
+                       transition-all hover:text-black dark:hover:text-white"
+            >
+                <Github class="size-4" />
+                View source
+            </a>
+        </div>
+    </div>
+</footer>

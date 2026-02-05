@@ -1,0 +1,84 @@
+---
+import { Image } from "astro:assets";
+import Github from "../assets/icons/Github.astro";
+import SquareArrowOutUpRight from "../assets/icons/SquareArrowOutUpRight.astro";
+import { ICONS } from "../assets/icons";
+import type { Project } from "../data/projects";
+
+interface Props {
+    project: Project;
+}
+
+const { project } = Astro.props;
+---
+
+<article
+    class="flex flex-col rounded-md bg-white dark:bg-gray-900/20 relative project-item transition hover:bg-gray-100 dark:hover:bg-gray-900/80"
+>
+    <div class="overflow-hidden rounded-t-md">
+        <button class="image-open-button w-full text-left">
+            <Image
+                src={project.img.light}
+                alt={project.title}
+                class="w-full h-full object-cover transition duration-300 hover:scale-110 dark:hidden"
+            />
+
+            <Image
+                src={project.img.dark}
+                alt={project.title}
+                class="hidden w-full h-full object-cover transition duration-300 hover:scale-110 dark:block"
+            />
+        </button>
+    </div>
+
+    <div class="flex flex-col flex-1 p-6">
+        <div class="flex justify-between items-center">
+            <h3 class="text-2xl font-bold leading-tight">{project.title}</h3>
+            <div class="flex gap-4">
+                {
+                    project.github && (
+                        <a
+                            href={project.github}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="rounded-full transition hover:scale-125"
+                        >
+                            <Github class="size-6" />
+                        </a>
+                    )
+                }
+                {
+                    project.link && (
+                        <a
+                            href={project.link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="rounded-full transition hover:scale-125"
+                        >
+                            <SquareArrowOutUpRight class="size-6" />
+                        </a>
+                    )
+                }
+            </div>
+        </div>
+        <p
+            class="mt-4 text-sm leading-relaxed text-black/80 dark:text-white/80"
+        >
+            {project.description}
+        </p>
+        <ul class="flex gap-3 flex-wrap mt-auto pt-4">
+            {
+                project.technologies.map((tech) => {
+                    const Icon = ICONS[tech.icon];
+
+                    return (
+                        <li class="flex items-center gap-2 text-nowrap bg-black/5 dark:bg-white/5 px-3 py-1 rounded-full">
+                            <Icon class="size-4 shrink-0" />
+                            <span class="text-sm font-medium">{tech.name}</span>
+                        </li>
+                    );
+                })
+            }
+        </ul>
+    </div>
+</article>

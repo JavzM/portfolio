@@ -1,0 +1,36 @@
+---
+import Mail from "../assets/icons/Mail.astro";
+import MapPin from "../assets/icons/MapPin.astro";
+import AboutItem from "./AboutItem.astro";
+---
+
+<div class="flex flex-col gap-8">
+    <p
+        class="text-lg dark:[&>strong]:text-slate-400 [&>strong]:text-slate-600 [&>strong]:font-semibold"
+    >
+        I’m <strong>Javier Martínez Blanco</strong>, a <strong
+            >software engineer</strong
+        > who’s been passionate about computers for as long as I can remember. That
+        curiosity is what got me into programming, and it’s still what drives me to
+        keep learning and building new things.
+        <br />
+        Lately, I’ve been focusing mostly on <strong>web development</strong>,
+        but I enjoy exploring other areas of programming as well. Outside of
+        code, I love tinkering with <strong>hardware</strong> — from PC building to
+        repurposing old machines. I’ve been getting into
+        <strong>homelabbing</strong> recently and I’m planning to build my own setup
+        in the near future. When I’m not in front of a screen, you’ll probably find
+        me cycling or at the gym.
+    </p>
+
+    <AboutItem>
+        <MapPin class="size-6" />
+        San José, Costa Rica
+    </AboutItem>
+    <AboutItem>
+        <Mail class="size-6" />
+        <a href="mailto:javier.martinez.blanco@est.una.ac.cr"
+            >javier.martinez.blanco@est.una.ac.cr</a
+        >
+    </AboutItem>
+</div>

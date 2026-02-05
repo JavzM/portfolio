@@ -1,0 +1,16 @@
+---
+import SKILLS from "../data/skills";
+import { TAGS } from "../data/skills";
+import SkillItem from "./SkillItem.astro";
+---
+
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    {
+        TAGS.map((tag) => {
+            const skills = SKILLS.filter((skill) => skill.tags.includes(tag));
+            if (!skills.length) return null;
+
+            return <SkillItem tag={tag} skills={skills} />;
+        })
+    }
+</div>

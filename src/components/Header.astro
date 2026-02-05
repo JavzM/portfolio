@@ -1,0 +1,136 @@
+---
+import ThemeToggle from "./ThemeToggle.astro";
+import Language from "../assets/icons/Language.astro";
+import Menu from "../assets/icons/Menu.astro";
+
+const items = [
+    { title: "Experience", label: "experience", href: "/#experience" },
+    { title: "Education", label: "education", href: "/#education" },
+    { title: "Projects", label: "projects", href: "/#projects" },
+    { title: "Skills", label: "skills", href: "/#skills" },
+    { title: "About me", label: "about", href: "/#about" },
+];
+---
+
+<header
+    class="fixed top-0 right-0 z-50 w-full flex justify-between backdrop-blur-sm"
+>
+    <nav class="hidden md:flex items-center gap-12 px-12 h-16">
+        {
+            items.map((link) => (
+                <a
+                    href={link.href}
+                    aria-label={link.label}
+                    class="relative border-b border-transparent
+               hover:border-black dark:hover:border-white
+               transition-colors"
+                >
+                    {link.title}
+                </a>
+            ))
+        }
+    </nav>
+
+    <!-- Mobile top bar -->
+    <div class="flex md:hidden items-center justify-end h-16 px-6 gap-4">
+        <button
+            id="menu-btn"
+            aria-label="Open menu"
+            class="p-2 rounded-lg backdrop-blur-md"
+        >
+            <Menu class="size-5" />
+        </button>
+    </div>
+
+    <!-- Mobile menu -->
+    <div
+        id="mobile-menu"
+        class="hidden absolute left-6 top-16
+            gap-4 p-4
+           bg-white dark:bg-gray-900
+           backdrop-blur-lg rounded-lg shadow-lg"
+    >
+        <div class="flex flex-col">
+            {
+                items.map((link) => (
+                    <a
+                        class="p-2 font-medium cursor-pointer relative border-b border-transparent
+           hover:border-black dark:hover:border-white
+           transition-colors"
+                        href={link.href}
+                    >
+                        {link.title}
+                    </a>
+                ))
+            }
+        </div>
+    </div>
+
+    <nav class="flex items-center gap-12 px-12 h-16">
+        <ThemeToggle />
+        <!-- /TODO Add translation -->
+        <!-- <Language class="size-5" /> -->
+    </nav>
+</header>
+
+<style>
+    #mobile-menu.open {
+        display: inline;
+        animation: scale-up-center 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94)
+            both;
+    }
+</style>
+<script is:inline>
+    const menu = document.getElementById("mobile-menu");
+
+    document.addEventListener("click", () => menu.classList.remove("open"));
+
+    document.getElementById("menu-btn").addEventListener("click", (e) => {
+        e.stopPropagation();
+        menu.classList.toggle("open");
+    });
+</script>
+<script>
+    document.addEventListener("astro:page-load", () => {
+        const sections = document.querySelectorAll("section");
+        const navItems = document.querySelectorAll("header nav a");
+
+        const callback = (entries: any[]) => {
+            entries.forEach((entry) => {
+                if (!entry.isIntersecting) return;
+
+                navItems.forEach((item) => {
+                    const isActive =
+                        item.getAttribute("aria-label") === entry.target.id;
+
+                    item.classList.toggle("text-indigo-600", isActive);
+                    item.classList.toggle("dark:text-indigo-400", isActive);
+
+                    item.classList.toggle("text-black", !isActive);
+                    item.classList.toggle("dark:text-white", !isActive);
+                });
+            });
+        };
+
+        const observer = new IntersectionObserver(callback, {
+            root: null,
+            rootMargin: "0px",
+            threshold: 0.3,
+        });
+
+        sections.forEach((section) => {
+            observer.observe(section);
+        });
+
+        // Cleanup function
+        document.onvisibilitychange = () => {
+            if (document.visibilityState === "hidden") {
+                observer.disconnect();
+            } else {
+                sections.forEach((section) => {
+                    observer.observe(section);
+                });
+            }
+        };
+    });
+</script>
