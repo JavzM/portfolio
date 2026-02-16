@@ -7,7 +7,7 @@ export const EXPERIENCE = [
       "As a software engineer, I design and maintain web platforms for project and resource management, build interactive dashboards for institutional data visualization, and contribute to the scalability and long-term reliability of production systems.",
   },
   {
-    date: "May 2022 - Dec 2023",
+    date: "Jan 2022 - Dec 2023",
     title: "Software Development Intern ",
     company: "Inter-American Institute for Cooperation on Agriculture (IICA)",
     description:
